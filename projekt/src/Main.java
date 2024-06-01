@@ -12,6 +12,7 @@ import java.io.File;
 public class Main extends Application{
     private TextField directoryPathField;
     private TextField searchField;
+    private TextArea resultArea;
 
 
     // 	metoda main wyzwala metodę launch do której przekazuje args. 
@@ -32,6 +33,11 @@ public class Main extends Application{
         searchField = new TextField();
         searchField.setPromptText("Enter search phrase");
 
+
+        //  TextArea resultArea
+        resultArea = new TextArea();
+        resultArea.setPrefHeight(400);
+
         //  przycisk browseButton
         Button browseButton = new Button("Browse");
         browseButton.setOnAction(e -> browseDirectory());
@@ -46,7 +52,7 @@ public class Main extends Application{
         VBox vBox = new VBox(10, hBox, searchField, searchButton);
 
         // zmienna scene przechowująca instancję klasy Scene zainicjalizowany parametrami vBox, 600 oraz 200, 
-        Scene scene = new Scene(vBox, 600, 200);
+        Scene scene = new Scene(vBox, 600, 400);
         primaryStage.setScene(scene);
 
         // Wyświetlenie aplikacji za pomocą primarystage
