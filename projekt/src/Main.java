@@ -44,12 +44,13 @@ public class Main extends Application{
 
         //  przycisk searchButton
         Button searchButton = new Button("Search");
+        searchButton.setOnAction(e -> searchFiles());
 
         //zmienna hBox przechowująca instancję klasy HBox zainicjalizowany parametrami 10, directoryPathField oraz browseButton
         HBox hBox = new HBox(10, directoryPathField, browseButton);
 
         //zmienna vBox przechowująca instancję klasy VBox zainicjalizowany parametrami 10, hbox, searchField oraz searchButton, 
-        VBox vBox = new VBox(10, hBox, searchField, searchButton);
+        VBox vBox = new VBox(10, hBox, searchField, searchButton, resultArea);
 
         // zmienna scene przechowująca instancję klasy Scene zainicjalizowany parametrami vBox, 600 oraz 200, 
         Scene scene = new Scene(vBox, 600, 400);
@@ -69,6 +70,40 @@ public class Main extends Application{
 
         if (selectedDirectory != null) {
             directoryPathField.setText(selectedDirectory.getAbsolutePath());
+        }
+    }
+
+    // Metoda searchFiles
+    private void searchFiles() {
+        String directoryPath = directoryPathField.getText();
+        if (directoryPath == null || directoryPath.isEmpty()) {
+            resultArea.setText("Please provide a directory path.");
+            return;
+        }
+
+        File directory = new File(directoryPath);
+        if (!directory.isDirectory()) {
+            resultArea.setText("The provided path is not a directory.");
+            return;
+        }
+
+        StringBuilder results = new StringBuilder();
+        listFilesInDirectory(directory, results);
+
+        resultArea.setText(results.toString());
+    }
+
+    // Metoda listFilesInDirectory
+    private void listFilesInDirectory(File directory, StringBuilder results) {
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    results.append(file.getName()).append("\n");
+                } else if (file.isDirectory()) {
+                    listFilesInDirectory(file, results);
+                }
+            }
         }
     }
 }
