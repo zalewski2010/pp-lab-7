@@ -23,6 +23,9 @@
         "org.mockito.Mockito.*",
         "org.mockito.ArgumentMatchers.*",
         "org.mockito.Answers.*"
+    ],
+    "java.project.sourcePaths": [
+        "src"
     ]
 }
 
